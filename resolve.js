@@ -30,7 +30,7 @@ if (!fs.existsSync(file)) {
 
 var root = YAML.safeLoad(fs.readFileSync(file).toString());
 var options = {
-  filter        : ['relative', 'remote'],
+  filter        : ['relative'],
   loaderOptions : {
     processContent : function (res, callback) {
       callback(null, YAML.safeLoad(res.text));
