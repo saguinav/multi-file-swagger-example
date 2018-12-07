@@ -13,6 +13,9 @@ program
   .option('-o --output-format [output]',
           'output format. Choices are "json" and "yaml" (Default is json)',
           'json')
+  .option('-f --filter [csv]',
+          'The filter to use when gathering JSON References. The values can be the followings: invalid, local, relative or remote. (Default is [relative,remote])',
+          'relative,remote')
   .usage('[options] <yaml file ...>')
   .parse(process.argv);
 
@@ -30,7 +33,7 @@ if (!fs.existsSync(file)) {
 
 var root = YAML.safeLoad(fs.readFileSync(file).toString());
 var options = {
-  filter        : ['relative', 'remote'],
+  filter        : program.filter.split(','),
   loaderOptions : {
     processContent : function (res, callback) {
       callback(null, YAML.safeLoad(res.text));
